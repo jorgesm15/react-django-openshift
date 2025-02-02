@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: image-registry.openshift-image-registry.svc:5000/jorgesm15-dev/backend:1.0.0
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DJANGO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: django-secret-key
+        - name: ALLOWED_HOSTS
+          value: "*"
+        - name: CORS_ALLOWED_ORIGINS
+          value: "*"  # En producción esto debería ser más restrictivo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
