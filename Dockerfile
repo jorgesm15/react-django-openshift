@@ -22,7 +22,7 @@ RUN apt-get update && \
 
 # Copiamos los archivos de requisitos e instalamos dependencias
 COPY requirements.txt .
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Copiamos el código de la aplicación
 COPY . .
