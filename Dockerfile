@@ -1,7 +1,7 @@
 # backend/Dockerfile
 
 # Usamos una imagen base oficial de Python
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 # Establecemos variables de entorno para Python
 ENV PYTHONDONTWRITEBYTECODE=1 \
